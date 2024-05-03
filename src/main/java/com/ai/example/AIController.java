@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/ai")
@@ -25,11 +26,19 @@ public class AIController {
         return response;
     }*/
 
-    @GetMapping("/prompt")
+  /*  @GetMapping("/prompt")
     private String promptResponse(
             @RequestParam("prompt") String prompt
     ){
         String response = client.call(prompt);
+        return response;
+    }*/
+
+    @GetMapping("/prompt")
+    private Flux<String> promptResponse(
+            @RequestParam("prompt") String prompt
+    ){
+        Flux<String> response = client.stream(prompt);
         return response;
     }
 }
